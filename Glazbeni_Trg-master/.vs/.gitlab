@@ -1,0 +1,13 @@
+{
+  "User": {
+    "Id": 1693849,
+    "Username": "karlomrak",
+    "Name": "Karlo Mrakovčić",
+    "Email": "karlomrak@gmail.com",
+    "AvatarUrl": "https://secure.gravatar.com/avatar/44c2d5a0f2a6b168ec1aa04782c0baa0?s=80&d=identicon",
+    "PrivateToken": "e9847b430c1e73b0941570c08f767c700441d45599494a7515cb591fa9b1bd7e",
+    "Host": "https://gitlab.com",
+    "TwoFactorEnabled": false,
+    "ApiVersion": 3
+  }
+}

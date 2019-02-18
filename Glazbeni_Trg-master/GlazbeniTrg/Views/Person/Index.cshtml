@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Person>
+
+<h5> </h5>
+<table class="table table-striped table-bordered table-sm">
+    <tr>
+        <th class="text-center">Ime i prezime</th>
+        <th class="text-center"></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td class="text-center">
+                <form asp-action="Show" method="post">
+
+                    <input type="hidden" name="PersonID" value="@item.PersonID" />
+                    <button type="submit" class="btn btn-link">
+                        @item.FirstName @item.LastName
+                    </button>
+                </form>
+            </td>
+            <td class="text-center">
+                <a asp-action="Edit" asp-route-id="@item.PersonID" class="btn btn-warning btn-sm">Uredi</a>
+                <form asp-action="Delete" asp-route-id="@item.PersonID" method="POST" style="display: inline-block">
+                    <button type="submit" class="btn btn-danger btn-sm">Obriši</button>
+                </form>
+            </td>
+        </tr>
+    }
+</table>
+
+<div class="text-center">
+    <a asp-action="Add" class="btn btn-primary">Dodaj osobu</a>
+</div>
+

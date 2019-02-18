@@ -1,0 +1,18 @@
+﻿@model GlazbeniTrg.Models.Album
+
+@{
+    ViewData["Title"] = "Brisanje";
+}
+
+<h2>Brisanje</h2>
+
+<h3>Želite li stvarno obrisati ovaj album?</h3>
+
+<h1> </h1>
+<div class="text-center">
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="AlbumID" />
+        <input type="submit" value="Obriši" class="btn btn-danger" /> |
+        <a asp-action="Index">Nazad</a>
+    </form>
+</div>

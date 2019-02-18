@@ -1,0 +1,45 @@
+﻿@model IEnumerable<GlazbeniTrg.Models.OrderDetail>
+
+@{
+    ViewData["Title"] = "Detalji narudžbe";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Detalji narudžbe</h2>
+
+
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>
+                Naziv Albuma
+            </th>
+            <th>
+                Količina
+            </th>
+            <th>
+                Cijena
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Album.AlbumName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

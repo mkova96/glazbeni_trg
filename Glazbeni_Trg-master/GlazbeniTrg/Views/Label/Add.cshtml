@@ -1,0 +1,22 @@
+﻿
+@model GlazbeniTrg.Models.ViewModels.LabelViewModel
+
+
+<form asp-action="Create" method="POST">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <h2>
+        Nova izdavacka kuca
+    </h2>
+    <div class="form-group">
+        <label asp-for="LabelName">Naziv </label>
+        <input asp-for="LabelName" class="form-control" />
+    </div>
+
+
+    <div class="text-center">
+        <button type="submit" class="btn btn-primary">Spremi</button>
+        <a asp-action="Index">
+            <button type="button" class="btn btn-secondary">Odustani</button>
+        </a>
+    </div>
+</form>

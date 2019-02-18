@@ -1,0 +1,32 @@
+﻿@model GlazbeniTrg.Models.Song
+
+<div class="text-center">
+    <h1>@Model.SongName</h1>
+</div>
+<h2>Trajanje: @Model.Duration.ToString()</h2>
+<h2>Godina izdavanja: @Model.SongYear.Year</h2>
+<h2>Žanr:</h2>
+@foreach (var x in Model.Genres)
+{
+    <h3>    •@x.GenreName</h3>
+
+}
+<h2>Tekst:</h2>
+@foreach (var x in Model.SongPersons)
+{
+    if (x.Function.HasFlag(Function.SONGWRITER))
+    {
+        <h3>    •@x.Person.FirstName @x.Person.LastName</h3>
+    }
+}
+
+<h2>Glazba:</h2>
+@foreach (var per in Model.SongPersons)
+{
+    if (per.Function.HasFlag(Function.SINGER) || per.Function.HasFlag(Function.GUITARIST) || per.Function.HasFlag(Function.DRUMMER) || per.Function.HasFlag(Function.BASSIST))
+    {
+        <h3>    •@per.Person.FirstName @per.Person.LastName</h3>
+    }
+}
+
+

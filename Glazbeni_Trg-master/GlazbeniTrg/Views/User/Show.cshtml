@@ -1,0 +1,15 @@
+﻿@model GlazbeniTrg.Models.ApplicationUser
+
+<div class="text-center">
+    <h1>@Model.FirstName @Model.LastName</h1>
+</div>
+
+<h2>E-mail: @Model.Email</h2>
+<h2>Grad: @Model.City.CityName</h2>
+<h2>Država:@Model.City.Country.CountryName</h2>
+
+
+<div class="text-center">
+    <a asp-action="Index" class="btn btn-primary">OK</a>
+</div>
+

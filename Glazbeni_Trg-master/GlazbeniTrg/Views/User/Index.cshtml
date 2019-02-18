@@ -1,0 +1,23 @@
+﻿@model IEnumerable<ApplicationUser>
+
+<h5> </h5>
+<table class="table table-striped table-bordered table-sm">
+    <tr>
+        <th class="text-center">Korisnicko ime</th>
+        <th class="text-center"></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td class="text-center">
+                <a asp-action="Show" asp-route-id="@item.Id">@item.Email</a>
+            </td>
+            <td class="text-center">
+                <form asp-action="Delete" asp-route-id="@item.Id" method="POST" style="display: inline-block">
+                    <button type="submit" class="btn btn-danger btn-sm">Obriši</button>
+                </form>
+            </td>
+        </tr>
+    }
+</table>

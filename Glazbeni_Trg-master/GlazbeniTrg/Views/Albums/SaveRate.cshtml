@@ -1,0 +1,9 @@
+﻿@model GlazbeniTrg.Models.Album
+@{
+    ViewData["Title"] = "SaveRate";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Hvala!! :)</h2>
+
+<h3>Vaša ocjena je spremljena!</h3>
+<a asp-action="Details" asp-route-id="@Model.AlbumID">Povratak</a>

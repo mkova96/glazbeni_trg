@@ -1,0 +1,24 @@
+﻿@model GlazbeniTrg.Models.ViewModels.EditGenreViewModel
+
+<form asp-action="Update" asp-route-Id="@Model.Genre.GenreID" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    @if (@ViewData["Success"] != null)
+    {
+        <div class="alert alert-success">Zanr spremljen</div>
+    }
+    <h2>Uredi</h2>
+
+    <div class="form-group">
+        <label asp-for="Genre.GenreName">Naziv</label>
+        <input asp-for="Genre.GenreName" class="form-control" />
+    </div>
+
+    <div class="text-center">
+        <button type="submit" class="btn btn-primary">Spremi</button>
+        <a asp-action="Index">
+            <button type="button" class="btn btn-secondary">Odustani</button>
+        </a>
+    </div>
+
+
+</form>

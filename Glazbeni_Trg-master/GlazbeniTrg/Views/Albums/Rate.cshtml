@@ -1,0 +1,28 @@
+﻿@model GlazbeniTrg.Models.Album
+@{
+    ViewData["Title"] = "Rate";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Ocijeni album</h2>
+
+@using (Html.BeginForm("SaveRate", "Albums", new { AlbumId = Model.AlbumID.ToString() }, FormMethod.Post, true, null))
+{
+    <form>
+        <br />
+        <input type="radio" name="rate" id="radio1" value="1" checked> 1<br>
+        <br />
+        <input type="radio" name="rate" id="radio2" value="2"> 2<br>
+        <br />
+        <input type="radio" name="rate" id="radio3" value="3"> 3<br>
+        <br />
+        <input type="radio" name="rate" id="radio4" value="4"> 4<br>
+        <br />
+        <input type="radio" name="rate" id="radio5" value="5"> 5
+        <br />
+        <br />
+        <input type="submit" value="Ocijeni" id="btnSubmit" />
+    </form>
+    <br />
+
+}
+<a asp-action="Details" asp-route-id="@Model.AlbumID">Povratak</a>

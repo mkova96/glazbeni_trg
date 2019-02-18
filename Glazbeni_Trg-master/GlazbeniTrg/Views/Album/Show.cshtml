@@ -1,0 +1,193 @@
+﻿@model GlazbeniTrg.Models.Album
+
+@{
+    ViewData["Title"] = @Html.DisplayFor(model => model.AlbumName);
+}
+<style>
+    table#t01 tr:nth-child(even) {
+        background-color: #eee;
+    }
+
+    table#t01 tr:nth-child(odd) {
+        background-color: #fff;
+    }
+
+    table#t01 th {
+        color: white;
+        background-color: black;
+    }
+
+    table {
+        border-spacing: 5px;
+    }
+</style>
+
+<h4>O albumu</h4>
+<b><font style="margin-right: 10px;" size="6" class="pull-right">@Html.DisplayFor(model => model.Price)</font></b>
+<div>
+    <h2>@Html.DisplayFor(model => model.AlbumName)</h2>
+    <i><font size="4">@Model.Songs.FirstOrDefault().SongPersons.FirstOrDefault(x => x.Function.Equals(Function.PERFORMER)).Person.FirstName</font></i>
+    <i><font size="4">@Model.Songs.FirstOrDefault().SongPersons.FirstOrDefault(x => x.Function.Equals(Function.PERFORMER)).Person.LastName</font></i>
+    @if (Model.Stock > 5)
+    {
+        <b><font class="pull-right" color="green">Dostupno za kupnju (@Model.Stock)</font></b>
+    }
+    @if (Model.Stock <= 5 && Model.Stock > 0)
+    {
+        <b><font class="pull-right" color="red">Zadnje količine! (@Model.Stock)</font></b>
+    }
+    @if (Model.Stock == 0)
+    {
+        <b><font class="pull-right" color="red">Dodati novu količinu!</font></b>
+    }
+
+
+    <h3></h3>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt style="width: 400px;">
+            <img src="@Html.DisplayFor(model => model.ImagePath)" alt="" width="400" height="400" />
+        </dt>
+        <u><h4 style="margin-left: 450px;">Osnovne informacije</h4></u>
+        <dd style="width: 1000px;">
+
+            <dl class="dl-horizontal pull-right" style="width: 780px;">
+                <dt>
+                    Format
+                </dt>
+                <dd>
+                    <b><font size="3">@Html.DisplayFor(model => model.Format)</font></b>
+                </dd>
+                <dt>
+                    Opis
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Description)
+                </dd>
+                <dt>
+                    Žanr
+                </dt>
+                <dd>
+                    <ul>
+                        @foreach (var ge in Model.Genres)
+                        {
+                            <li>@ge.GenreName</li>
+                        }
+                    </ul>
+                </dd>
+
+                <dt>
+                    Godina
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.AlbumYear)
+                </dd>
+                <dt>
+                    Izdavač
+                </dt>
+                <dd>
+                    <i>@Html.DisplayFor(model => model.Label.LabelName)</i>
+                </dd>
+                <dt>
+                    Producent
+                </dt>
+                <dd>
+                    @{
+                        HashSet<Person> osobe = new HashSet<Person>();
+                        foreach (var pe in Model.Songs.Select(s => s.SongPersons))
+                        {
+                            foreach (var p in pe)
+                            {
+                                if (p.Function.HasFlag(Function.PRODUCER))
+                                {
+                                    osobe.Add(p.Person);
+                                }
+                            }
+                        }
+                    }
+
+                    @foreach (var per in osobe)
+                    {
+                        <li>
+                            @per.FirstName
+                            @per.LastName
+                        </li>
+                    }
+                </dd>
+                <dt>
+                    <img src="http://pngimg.com/uploads/star/star_PNG1596.png" alt="" width="30" height="30" />
+                </dt>
+                <dd>
+                    <b><font size="5">@Html.DisplayFor(model => model.AvgGrade)</font></b>
+                </dd>
+                <dt></dt>
+
+            </dl>
+        </dd>
+    </dl>
+</div>
+
+<u><h4>Popis pjesama na albumu</h4></u>
+<table id="t01" style="border:1px solid black; width: 80%; background-color:aliceblue">
+    <tr style="border: 1px solid black">
+        <th style="border: 1px solid black; text-align: center">Redni broj</th>
+        <th style="border: 1px solid black; text-align: center">Ime pjesme</th>
+        <th style="border: 1px solid black; text-align: center">Trajanje</th>
+        <th style="border: 1px solid black; text-align: center">Tekst</th>
+        <th style="border: 1px solid black;text-align: center">Glazba</th>
+    </tr>
+    @{
+        int i = 1;
+
+        foreach (var song in Model.Songs)
+        {
+            TimeSpan duration = @song.Duration;
+            <tr style="border: 1px solid black">
+
+                <td style="border: 1px solid black; text-align:center">@i.</td>
+                <td style="border: 1px solid black; text-align: center">@song.SongName</td>
+                <td style="border: 1px solid black; text-align: center">
+                    @string.Format("{1:D2}:{2:D2}",
+                             duration.Hours,
+                             duration.Minutes,
+                             duration.Seconds)
+                </td>
+                <td style="border: 1px solid black; text-align: center">
+                    @foreach (var per in song.SongPersons)
+                    {
+                        if (per.Function.HasFlag(Function.SONGWRITER))
+                        {
+                            <li>
+                                @per.Person.FirstName
+                                @per.Person.LastName
+                            </li>
+                        }
+                    }
+                </td>
+                <td style="border: 1px solid black;text-align: center">
+                    @foreach (var per in song.SongPersons)
+                    {
+                        if (per.Function.HasFlag(Function.COMPOSER))
+                        {
+                            <li>
+                                @per.Person.FirstName
+                                @per.Person.LastName
+                            </li>
+                        }
+                    }
+                </td>
+            </tr>
+            i++;
+        }
+    }
+</table>
+<!--<div>
+    <a asp-action="Edit" asp-route-id="@Model.AlbumID">Uredi</a> |
+    <a asp-action="Index">Povratak</a>
+</div>-->
+
+
+<br />
+
+

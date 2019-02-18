@@ -1,0 +1,38 @@
+﻿@model GlazbeniTrg.Models.ViewModels.SongViewModel
+
+
+<form asp-action="Create" method="POST">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <h2>
+        Nova pjesma
+    </h2>
+    <div class="form-group">
+        <label asp-for="SongName">Naziv </label>
+        <input asp-for="SongName" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="SongYear">Godina</label>
+        <input asp-for="SongYear" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Duration">Trajanje </label>
+        <input asp-for="Duration" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="GenreIDs">Zanrovi</label>
+        <select multiple asp-for="GenreIDs" asp-items="@(new SelectList((IEnumerable<Genre>) @ViewData["Genres"], "GenreID", "GenreName"))" class="form-control"></select>
+    </div>
+
+    <!-- <div class="form-group">
+        <label asp-for="FunctionIDs">Funkcije</label>
+        <select multiple asp-for="FunctionIDs" asp-items="(new SelectList((IEnumerable<Function>) ViewData["Functions"], "FunctionID", "Func"))" class="form-control"></select>
+    </div>-->
+
+
+    <div class="text-center">
+        <button type="submit" class="btn btn-primary">Spremi</button>
+        <a asp-action="AddSong">
+            <button type="button" class="btn btn-secondary">Odustani</button>
+        </a>
+    </div>
+</form>

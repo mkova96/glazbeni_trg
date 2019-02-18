@@ -1,0 +1,67 @@
+﻿@model GlazbeniTrg.Models.ManageViewModels.GenreViewModel
+@{
+    ViewData["Title"] = "Preferred";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Vaše preferencije</h2>
+<br />
+@using (Html.BeginForm("SavePreferredGenres", "Manage"))
+{
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+
+
+                @{bool flag = false;
+                    int counter = 0;     }
+                @foreach (var item in Model.Genres)
+                {
+                    if (Model.PrefGenres.Contains(item) == true)
+                    {
+                        flag = true;
+                    }
+                    else
+                    {
+                        flag = false;
+
+                    }
+
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <div class="row">
+                                @if (flag == false)
+                                {
+                                    <input id="@Model.Values[counter]"
+                                           name="@item.GenreName"
+                                           type="checkbox"
+                                           value="@flag" />
+
+                                            <label>@item.GenreName</label>
+                                }
+                                else
+                                {
+                                    <input checked="checked"
+                                           id="@Model.Values[counter]"
+                                           name="@item.GenreName"
+                                           type="checkbox"
+                                           value="@flag" />
+
+                                            <label>@item.GenreName</label>
+
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    counter++;
+                }
+
+                <div class="form-group">
+                    <input type="submit" value="Potvrdi" class="btn btn-default" />
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+                    }

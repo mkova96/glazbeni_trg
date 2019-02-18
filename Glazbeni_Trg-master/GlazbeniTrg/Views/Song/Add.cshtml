@@ -1,0 +1,79 @@
+﻿
+@model GlazbeniTrg.Models.ViewModels.SongViewModel
+
+<form asp-action="Create" method="POST">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <h2>
+        Nova pjesma
+    </h2>
+    <div class="form-group">
+        <label asp-for="SongName">Naziv </label>
+        <input asp-for="SongName" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="SongYear">Godina</label>
+        <input asp-for="SongYear" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Duration">Trajanje </label>
+        <input asp-for="Duration" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="GenreIDs">Zanrovi</label>
+        <select multiple asp-for="GenreIDs" asp-items="@(new SelectList((IEnumerable<Genre>) @ViewData["Genres"], "GenreID", "GenreName"))" class="form-control"></select>
+    </div>
+    <div class="form-group">
+        <label asp-for="Band">Band? </label>
+        <select name="Band">
+            <option value="true">Da</option>
+            <option value="false">Ne</option>
+        </select>
+        (Ukoliko nije bend, ne moraju se odabrati funkcije pjevaca, bubnjara, gitarista i basista, inace moraju)
+    </div>
+
+    <table class="table table-striped table-bordered table-sm">
+        <tr>
+            <td class="form-group">
+                <label asp-for="Bassist">Basisti</label>
+                <select multiple asp-for="Bassist" asp-items="@(new SelectList((IEnumerable<Person>)@ViewData["Bassist"], "PersonID", "LastName"))" class="form-control"></select>
+            </td>
+            <td class="form-group">
+                <label asp-for="Composer">Skladatelji</label>
+                <select multiple asp-for="Composer" asp-items="@(new SelectList((IEnumerable<Person>)@ViewData["Composer"], "PersonID", "LastName"))" class="form-control"></select>
+            </td>
+            <td class="form-group">
+                <label asp-for="Drummer">Bubnjari</label>
+                <select multiple asp-for="Drummer" asp-items="@(new SelectList((IEnumerable<Person>)@ViewData["Drummer"], "PersonID", "LastName"))" class="form-control"></select>
+            </td>
+            <td class="form-group">
+                <label asp-for="Guitarist">Gitaristi</label>
+                <select multiple asp-for="Guitarist" asp-items="@(new SelectList((IEnumerable<Person>)@ViewData["Guitarist"], "PersonID", "LastName"))" class="form-control"></select>
+            </td>
+        </tr>
+        <tr>
+            <td class="form-group">
+                <label asp-for="Performer">Izvođači</label>
+                <select multiple asp-for="Performer" asp-items="@(new SelectList((IEnumerable<Person>)@ViewData["Performer"], "PersonID", "LastName"))" class="form-control"></select>
+            </td>
+            <td class="form-group">
+                <label asp-for="Producer">Producenti</label>
+                <select multiple asp-for="Producer" asp-items="@(new SelectList((IEnumerable<Person>)@ViewData["Producer"], "PersonID", "LastName"))" class="form-control"></select>
+            </td>
+            <td class="form-group">
+                <label asp-for="Singer">Pjevači</label>
+                <select multiple asp-for="Singer" asp-items="@(new SelectList((IEnumerable<Person>)@ViewData["Singer"], "PersonID", "LastName"))" class="form-control"></select>
+            </td>
+            <td class="form-group">
+                <label asp-for="Songwriter">Tekstopisci</label>
+                <select multiple asp-for="Songwriter" asp-items="@(new SelectList((IEnumerable<Person>)@ViewData["Writer"], "PersonID", "LastName"))" class="form-control"></select>
+            </td>
+        </tr>
+    </table>
+
+    <div class="text-center">
+        <button type="submit" class="btn btn-primary">Spremi</button>
+        <a asp-action="Index">
+            <button type="button" class="btn btn-secondary">Odustani</button>
+        </a>
+    </div>
+</form>

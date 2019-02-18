@@ -1,0 +1,41 @@
+﻿@model IEnumerable<GlazbeniTrg.Models.Order>
+
+@{
+    ViewData["Title"] = "Prošle Kupovine";
+    ViewData.AddActivePage(ManageNavPages.LastPurchases);
+}
+
+<h2>Vaše prošle kupovine</h2>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>ID narudžbe</th>
+        <th>Datum narudžbe</th>
+        <th>Ukupna cijena</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+
+
+    @foreach (var item in Model) {
+
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PriceSum)
+            </td>
+            <td>
+                <a asp-controller="Manage" asp-action="Details" asp-route-id="@item.OrderID">Details</a> |
+            </td>
+        </tr>
+
+    }
+    </tbody>
+</table>

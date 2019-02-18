@@ -1,0 +1,70 @@
+﻿
+@model GlazbeniTrg.Models.ViewModels.AlbumViewModel
+
+
+<form asp-action="Create" method="POST">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <h2>
+        Novi Album
+    </h2>
+    <div class="form-group">
+        <label asp-for="AlbumName">Naziv</label>
+        <input asp-for="AlbumName" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="AlbumYear">Datum objavljivanja</label>
+        <input asp-for="AlbumYear" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Format">Format </label>
+        <select name="Format">
+            <option value="CD">CD</option>
+            <option value="DVD">DVD</option>
+            <option value="Vinyl">Vinyl</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label asp-for="Price">Cijena</label>
+        <input asp-for="Price" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Description">Opis</label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+    </div>
+    <div class="form-group">
+        <label asp-for="AvgGrade">Ocjena</label>
+        <input asp-for="AvgGrade" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="ImagePath">Slika</label>
+        <input asp-for="ImagePath" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="LabelID">Izdavacka kuca</label>
+        <select asp-for="LabelID" asp-items="@(new SelectList((IEnumerable<Label>) @ViewData["Labels"],"LabelID", "LabelName"))" class="form-control"></select>
+    </div>
+    <div class="form-group">
+        <label asp-for="Stock">Kolicina</label>
+        <input asp-for="Stock" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="GenreIDs">Zanrovi</label>
+        <select multiple asp-for="GenreIDs" asp-items="@(new SelectList((IEnumerable<Genre>) @ViewData["Genres"], "GenreID", "GenreName"))" class="form-control"></select>
+    </div>
+    <div class="form-group">
+        <label asp-for="SongIDs">Pjesme</label>
+        <!--<a asp-action="AddSong" class="btn btn-secondary">+Dodaj pjesmu</a>-->
+        <select multiple asp-for="SongIDs" asp-items="@(new SelectList((IEnumerable<Song>) @ViewData["Songs"], "SongID", "SongName"))" class="form-control"></select>
+    </div>
+
+
+    <div class="text-center">
+
+        <button type="submit" class="btn btn-primary">Spremi</button>
+        <a asp-action="Index">
+            <button type="button" class="btn btn-secondary">Odustani</button>
+        </a>
+    </div>
+
+</form>

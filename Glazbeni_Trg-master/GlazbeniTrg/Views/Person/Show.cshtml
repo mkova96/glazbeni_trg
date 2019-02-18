@@ -1,0 +1,27 @@
+﻿@model Person
+
+
+<div class="text-center">
+    @if (@Model.LastName != null)
+    {
+        <h1>
+            @Model.FirstName.ToString() @Model.LastName.ToString()
+        </h1>
+    }
+    else
+    {
+        <h1>
+            @Model.FirstName.ToString()
+        </h1>
+
+    }
+</div>
+
+<h2>     Kratka biografija:</h2>
+<h3>@Model.Bio</h3>
+<h4> </h4>
+
+<div class="text-center">
+    <a asp-action="Index" class="btn btn-primary">OK</a>
+</div>
+

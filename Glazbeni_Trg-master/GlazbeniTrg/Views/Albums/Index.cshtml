@@ -1,0 +1,141 @@
+﻿@model IEnumerable<GlazbeniTrg.Models.Album>
+
+    @{
+    ViewData["Title"] = "Svi artikli";
+    }
+
+
+    <h2>Pregled albuma</h2>
+
+
+
+    <button class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Filtriraj<span class="caret"></span></a>
+        <ul class="dropdown-menu" role="menu">
+            
+            
+            <li class="divider"></li>
+            <li style="text-align:center" class="dropdown-header">Opcije filtriranja</li>
+            <form asp-controller="Albums" asp-action="Index" method="get" style="text-align:center">
+                <input type="text" name="minPrice" value="@ViewData["MinPrice"]" placeholder="Cijena od..." />
+                <input type="text" name="maxPrice" value="@ViewData["MaxPrice"]" placeholder="Cijena do..." />
+                <li class="divider"></li>
+                <input type="text" name="yearMin" value="@ViewData["YearMin"]" placeholder="Godina od..." />
+                <input type="text" name="yearMax" value="@ViewData["YearMax"]" placeholder="Godina do..." />
+                <li class="divider"></li>
+                <li style="text-align:center" class="dropdown-header">Žanrovi</li>
+                @{
+
+                    HashSet
+                    <Genre>
+                        genres = new HashSet<Genre>
+                            ();
+                    foreach (var album in Model)
+                    {
+                        foreach (var genre in album.Genres)
+                        {
+                            genres.Add(genre);
+
+                        }
+
+                    }
+
+                    foreach (var g in genres.OrderBy(x => x.GenreName))
+                    {
+                        <li><input type="checkbox" name="genress" value="@g.GenreName" />@g.GenreName</li>
+                    }
+                    <li class="divider"></li>
+                    <input type="submit" name="submit" value="Filtriraj" />
+                }
+
+                
+            </form>
+            
+            <li class="divider"></li>
+            
+
+</ul>
+    </button>
+
+    <div class="pull-right">
+        @using (Html.BeginForm("Index", "Albums", new {minPrice=@ViewData["MinPrice"], maxPrice=@ViewData["MaxPrice"], yearMin=@ViewData["YearMin"], yearMax=@ViewData["YearMax"], searchString=@ViewData["CurrentFilter"], genress=@ViewData["Filteri"]}))
+        {
+        <t>Prikaži </t>
+        @Html.DropDownList("sort", ViewBag.DropDownCollection as SelectList, "--opcija--", new
+        {
+        title = "Prikaz",
+        onchange = "submit();"
+        });
+
+        }
+    </div>
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+
+
+
+    @foreach (var item in Model)
+    {
+    <div class="col-sm-4 col-lg-4 col-md-4 ">
+        <div class="thumbnail">
+            <a asp-action="Details" asp-route-id="@item.AlbumID"><img src="@Html.DisplayFor(modelItem => item.ImagePath)" alt="" width="250" height="250" /></a>
+            <div class="caption">
+                <h3 class="pull-right">@Html.DisplayFor(modelItem => item.Format)</h3>
+                <h3>
+                    <a asp-action="Details" asp-route-id="@item.AlbumID">@Html.DisplayFor(modelItem => item.AlbumName)</a>
+                </h3>
+                <div>
+                    <i><font size="3">@item.Songs.FirstOrDefault().SongPersons.FirstOrDefault(x => x.Function.Equals(Function.PERFORMER)).Person.FirstName</font></i>
+                    <i><font size="3">@item.Songs.FirstOrDefault().SongPersons.FirstOrDefault(x => x.Function.Equals(Function.PERFORMER)).Person.LastName</font></i>
+                    @if (Context.User.Identity.IsAuthenticated)
+                    {
+
+
+                    <a asp-action="Rate" asp-route-id="@item.AlbumID"><img class="pull-right" src="http://pngimg.com/uploads/star/star_PNG1596.png" alt="" width="20" height="20" /></a>
+
+
+                    }
+                    else
+                    {
+                    <img class="pull-right" src="http://pngimg.com/uploads/star/star_PNG1596.png" alt="" width="20" height="20" />
+
+                    }
+
+                    <font class="pull-right"><b>@Html.DisplayFor(modelItem => item.AvgGrade)</b></font>
+
+
+                </div>
+                <b><font size="4">@Html.DisplayFor(modelItem => item.Price)</font></b>
+                <a asp-controller="Cart" asp-action="AddToCart" asp-route-albumId="@item.AlbumID"><img class="pull-right" src="~/images/cart.png" alt="" width="35" height="35" /></a>
+
+                <br />
+
+            </div>
+
+        </div>
+    </div>
+    <script>
+        $(document).ready(function() {
+    $('#postBtn').click(function() {
+        var list = [];
+        $('#formId input:checked').each(function() {
+            list.push(this);
+        });
+        // now names contains all of the names of checked checkboxes
+        // do something with it for excamle post with ajax
+        $.ajax({
+            url: '@Url.Action("Index","Albums")',
+            type: 'POST',
+            data: { Parameters: list},
+            success: function (result) {
+                alert("success")!
+            },
+            error: function (result) {
+                alert("error!");
+            }
+        });   //end ajax
+    });
+});
+    </script>
+    }

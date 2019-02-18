@@ -1,0 +1,33 @@
+﻿
+@model GlazbeniTrg.Models.ViewModels.EditPersonViewModel
+
+
+<form asp-action="Update" asp-route-Id="@Model.Person.PersonID" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    @if (@ViewData["Success"] != null)
+    {
+        <div class="alert alert-success">Osoba spremljena</div>
+    }
+    <h2>Uredi</h2>
+
+    <div class="form-group">
+        <label asp-for="Person.FirstName">Ime </label>
+        <input asp-for="Person.FirstName" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Person.LastName">Prezime </label>
+        <input asp-for="Person.LastName" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Person.Bio">Opis</label>
+        <textarea asp-for="Person.Bio" class="form-control"></textarea>
+    </div>
+
+
+    <div class="text-center">
+        <button type="submit" class="btn btn-primary">Spremi</button>
+        <a asp-action="Index">
+            <button type="button" class="btn btn-secondary">Odustani</button>
+        </a>
+    </div>
+</form>
